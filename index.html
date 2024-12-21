@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>풀페이지</title>
+</head>
+<body>
+    <script>
+        /* 스크립트가 맨 첫번째로 올 때, DOM이 로드되기 전
+            써주는 명령문(필수)
+            같은 예시 = window.onload = () => {}
+         */
+    window.addEventListener('DOMContentLoaded', () => {
+        // console.log(load);
+
+        const full = document.getElementById('full');
+        full.style.transform = 'translateY(0px)';
+
+        let pagenumber = 0;
+        let stop = false;
+        let fullnumber = full.querySelectorAll('section');
+
+        full.addEventListener('wheel', e => {
+            
+            e.preventDefault();
+            // console.log('ㅇㅇ');
+
+            if(e.deltaY > 0 && !stop && pagenumber < fullnumber.length - 1){
+                // full.style.transform='translateY(-100px)';
+                stop = true;
+                pagenumber++;
+                console.log(pagenumber);
+                animation();
+                setTimeout(() => {
+                    stop = false;
+                }, 1000)
+            }else if(e.deltaY < 0 && !stop && pagenumber > 0){
+                // full.style.transform='translateY(100px)';
+                stop = true;
+                pagenumber--;
+                console.log(pagenumber);
+                animation();
+                setTimeout(() => {
+                    stop = false;
+                }, 1000)
+            }
+
+        })
+
+        const animation = () => {
+            let h = window.innerHeight;
+            let w = window.innerWidth;
+
+            full.style.transform = `translateY(-${h * pagenumber}px)`
+        }
+
+    })
+
+
+    </script>
+    <style>
+        body{overflow: hidden; width: 100vw; height: 100vh;}
+        *{padding: 0; margin: 0; box-sizing: border-box;}
+        ::-webkit-scrollbar{display: none;}
+        div{
+            background-color: #133;
+            transition: all 1s ease;
+        }
+        section{
+            width: 100vw;
+            height: 100vh;
+            background-color: #090909;
+        }
+        .first{background-color: pink;}
+        .seconde{background-color: lemonchiffon;}
+    </style>
+    <div class="full" id="full">
+        <section class="first"> 1 </section>
+        <section class="seconde"> 2 </section>
+    </div>
+</body>
+</html>

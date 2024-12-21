@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        window.addEventListener('DOMContentLoaded', (e) => {
+
+            const full = document.getElementById('full');
+            const fullST = full.querySelectorAll('section');
+
+
+            let pagenumber = 0;
+            let stop = false;
+
+            full.addEventListener('wheel' , (e) => {
+
+                e.preventDefault();
+                // console.log(e);
+
+                if(e.deltaY > 10 && !stop && pagenumber < fullST.length - 1){
+                    stop = true;
+                    pagenumber++;
+                    console.log(pagenumber);
+                    animation();
+                    setTimeout(()=>{
+                        stop = false;
+                    }, 1000)
+                }else if(e.deltaY < -10 && !stop && pagenumber > 0){
+                    stop = true;
+                    pagenumber--;
+                    console.log(pagenumber);
+                    animation();
+                    setTimeout(()=>{
+                        stop = false;
+                    }, 1000)
+                }
+
+            })
+
+
+            const animation = () => {
+
+                let w = window.innerWidth;
+                let h = window.innerHeight;
+
+                full.style.transform = `translateY(-${h * pagenumber}px)`
+            }
+
+        })
+    </script>
+    <style>
+        *{margin: 0; padding: 0; box-sizing: border-box;}
+        div{
+            background-color: #f0f0f0;
+            transition: all 1s ease;
+        }
+        section{
+            background-color: orange;
+            width: 100vw; height: 100vh;
+        }
+        .seconde{background-color: #333;}
+    </style>
+
+    <div class="wrap" id="full">
+        <section>1</section>
+        <section class="seconde">2</section>
+        <section>3</section>
+    </div>
+</body>
+</html>
